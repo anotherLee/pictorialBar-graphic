@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>pictorialBar-graphic</title>
+  <style>
+    #pictorialBar-graphic{
+      width:800px;
+      height:400px;
+      border:1px solid #ddd;
+      margin:100px auto 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="pictorialBar-graphic"></div>
+  
+  <script src="./echarts.min.js"></script>
+  <script>
+    var boy = "path://M499.7,267.6c32.3,0.2,58.6-25.8,58.6-58c0-32-26.2-58-58.6-58c-32.4,0-58.6,26-58.6,58C441.2,241.6,467.3,267.6,499.7,267.6L499.7,267.6z M558.4,280.7H440.9c-44.2,0-73.1,38.6-73.1,75.4v176.8c0,34.3,48.6,34.3,48.6,0V369.4h9.4v444.4c0,47.3,65.9,45.9,67.5,0V557.7h12.6V814c2.7,48.5,67.5,43.9,67.5-0.2V369.4h7.8v163.4c0,34.3,50.2,34.3,50.2,0V356C631.5,319.4,602.5,280.7,558.4,280.7L558.4,280.7z M558.4,280.7"
+    var girl = "path://M643.8,495.3l-44.6-162c-6.1-18.3-27.6-50.6-63.7-52.1h-71.6c-37.3,1.5-58.7,33.5-63.8,52.2l-44.5,161.8c-9.6,35.4,31.3,49.2,41.4,16l39.8-149.3h11.2l-68.5,262.2h64v197.1c0,35.7,48.5,35.7,48.5,0V624.2h15.2v197.1c0,35.7,46.9,35.7,46.9,0V624.2h65.8l-70-262.2h12.7l39.9,149.3C612.2,545.2,652.9,530.6,643.8,495.3L643.8,495.3z M499.5,268c30.7,0,55.5-25.9,55.5-57.9c0-31.9-24.8-57.9-55.5-57.9s-55.4,26-55.4,57.9C444,242.1,468.8,268,499.5,268L499.5,268z M499.5,268";
+    var girlY = "data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA5CAMAAABQ8ci0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA0lBMVEUAAAD8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8THr8UH39pLv9cpf/+vv////8WoT/6u/+4en9mbP+3eb9haT9fJ7+xNP+tMf8ZY3/9Pf9oLn/9vn+xdT9a5H+ytf9dZn+1N/9j6z8Un//8PT/5ez8Yov+ztv9hqX+uMr+2eP+rMH9nbb+vs/+rcIAAACJHA6WAAAAIHRSTlMACD93oMfl7qkQZ772Lvkpt4383myVFcxNToTSHFjVNtWJLdUAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4QwJETYfsMSVywAAAndJREFUSMell+ta4jAQhmNBCqLlpLDAAsMhLSK2VFqQM6L3f03blhWazMTyyPfDx0zmJckkmUwZo3SjpdK3GR1Az9xmU9oNu1C5u/w9CLrP3+UuAB+yBhAysg8JYKEIShV/gnOlMvygckk5ba0CCapoNPlYTiKDgR8pspQMhiphMn0ZCZCWyadLSYAnkUydOrq9PuXf73VP/6eE2MYiNOA9UwbNHh/EYhWLczUTc7M4Hz6L5POQcyvWzlTpEAUo56OXs2E8Ci1x9BwqDRDK+ev/Jfdfj20Bhe8p1yiUc9sBcOzvlojWjuQfoFE+cd0Jp1GoR2hegb5NPW/6pkDz0T0DGvVnYWvm0ygUArRBovNTiF/mJNoI0CaBWu+Ls2HxbhFok7G/kgkmfHk8TgszUPQTZm/JJ7JflbUkS3c1XUcHwd2sLGu1ccdhaz1ddSXHFrqmXS/8u/VPu8L9bWjxZLTBioC12HFBuwXhlGVtbDTnXNLcxF5tpuMx9xxpj8fNMJywbU7IRm46Q6YxJzVGjnjUDY1u8KjyWmcDGh3M0FrlCH9whT6kSLXRvvoq1HfkfZVP00iFjqRANdAZHqrQ4VZ0bKGbczFaRff10gk3cZZQh2ktLRXlpoMKPYibU8AZ0VEdCXFvoozI6uKwU8V8Ra86lf3pYQee4FQj3xxwKdQVfTTypQP4xOSn6JGm39cgs+1kcifmtNj7Krzq0Q4t4+DyIPaWheopJXaCZ5/euIntSZ1CLUFUMM72y9/v/a+tI/dIFcw1ddM11VpQIxrJoEHWiIx1kivTDlPo9/Uwu6IKj2atqv07LFm//uKIFH3nVHTD0Cvq75x/dQhYiD64ST4AAAAASUVORK5CYII="
+    var boyY = "data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA7CAMAAAAdOWm/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA81BMVEUAAAAeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccMeccM7hMtnn9eXveO50+zP4fJFis6gxObx9vv///+CsN7r8vojdMWmx+ety+mItN/6/P640uw/hsz2+v2DsN6LtuAmdsa/1u7V5fRZltPY5vVemtSSu+JPkNDF2u/J3fEsesfi7fe10Ovs8/ovfMczfsnl7vhzptrz9/x8rdwAAAC96U9aAAAAJnRSTlMACDt2osbj8Vqz9RuQ7xaV+mUUu072/DauD+mFhnpAmyfY7F3ddTp2N+cAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH4QwJETcDvd74xQAAAqxJREFUSMell+tC4jAQhQNKCwgC3mGBctuA2hIBi7JcFSlVUd//bTaWgs1MSrvs+UczX1NOJpMJITJFogeHMUWlVFVihwfRCAmpSDyRpIKSiXgY+iiVphKlU0cB4HEmS32UzRzvInNpukPpnC94ckoDdHoiJ6NKEEmpEpWRZ+fBJKXnZ5iMZ8OQ3K04mvMiHMlZMO9lMizJE+RS8BY71Gxd39ze3ly3mtgrr89XcFQ32sxV29DhaMJjERy76zCPOndwfGtVviAOdHsMqNcVIwp5F/0F3nnPkO5BSNGdFCSuySQyxZj0etoScKgvQ/vAq5KDgoV5YFI9gAX6Jsvis8eBHIXTljmqiY/+MB8NR0KcxlGwMmM/dCymFf/iCrB94odOpmJgheQAOvNDZy0xMEcy+6IpAuuR/wc/iYEJUgVoWJtoldQA+uyHPouLwy2GJWnel5P9OQhUCYV6kaMvKBDNSqdydErRrDX0NkNGGihMQQ5TOlpgcjFCYVUiOWcsxC4sHJVA2eTMC4pTbyQJSqEc7jr7suXJjLGTgTqobDyH4c7pLm0nbabmeNbpzMamY23TXkK0gvYrbbPX4ZvzEuv93XKAt+ErayODUZWgK/6Nyw/Pvxt9LPmjFQjTcG1yUO7pdou11n5DtCypiKuNO07Szjd+AVSR1eENyga2rtvb+gjQkqz6b1H2aZqfTI6q7jlZlKPGI6/KhhwtSk86F7Xd/Tm3Jej2pCN1hHoL0dMEoXX5qc4XcfIlevLF4aXn95WnIcg3fp73mWmBNaSWORj8/GrkPaing+kOYRFypA+3OSx2MP/SN12gfq0etlurE6T9e0TemRaCyYK0M+W9e3A/7N/F792Fcx1r/r2/trP3J/9x4/gWv+eoIqeGu+es6ehvLdaoZbO1hv/t6i8iF67ODlyJOQAAAABJRU5ErkJggg=="
+    var myChart = echarts.init(document.getElementById('pictorialBar-graphic'))
+    var option = {
+      tooltip:{
+        trigger:'axis'
+      },
+      grid:{
+        left:'20%'
+      },
+      graphic:[
+        {
+          type:'image',
+          left:'3%',
+          top:'25%',
+          style:{
+            image:girlY
+          }
+        },
+        {
+          type:'image',
+          left:'3%',
+          top:'60%',
+          style:{
+            image:boyY
+          }
+        }
+      ],
+      xAxis:{
+        type:'value',
+        axisLine:{ show:false },
+        axisLabel:{ show:false },
+        axisTick: { show:false },
+        splitLine:{ show:false }
+      },
+      yAxis:{
+        type:'category',
+        data:['男性', '女性'],
+        axisLine:{ show:false },
+        axisTick:{ show:false },
+        axisLabel:{
+          margin:30
+        },
+        axisPointer:{
+          type:'shadow'
+        }
+      },
+      series:[
+        {
+          name:'2015',
+          type:'pictorialBar',
+          label:{
+            normal:{
+              show:true,
+              position:'right',
+              color:'#ccc',
+              distance:30,
+              fontSize:18
+            }
+          },
+          symbolRepeat:true,
+          data:[
+            {
+              value:65,
+              symbol:boy,
+              symbolSize:[30,40],
+              label:{
+                normal:{
+                  color:'red'
+                }
+              }
+            },
+            {
+              value:45,
+              symbol:girl,
+              symbolSize:[30,40]
+            }
+          ]
+        }
+      ]
+    }
+    myChart.setOption(option)
+  </script>
+</body>
+</html>
